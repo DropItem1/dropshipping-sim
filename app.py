@@ -29,36 +29,37 @@ idaho_tax_rate = 0.05695    # 5.695%
 
 records = []
 for day in range(days):
-    visitors = daily_visitors[day]
-    orders = np.random.poisson(visitors * conversion_rate)  # randomness in orders
-    revenue = orders * price
-    cost_goods = orders * cost
-    payment_fees = orders * (price * 0.029 + 0.30)
-    amazon_fees = revenue * 0.15
-    domain_fee = 15 / 365
-    refunds = np.random.binomial(orders, refund_rate)
-    refund_cost = refunds * price
-    # Base visitors from random daily traffic
+    # Base visitors
     visitors = daily_visitors[day]
 
-    # Add social media boost
+    # Social media boost
     tiktok_reach = sum(np.random.randint(15, 50) for _ in range(tiktok_posts))
     instagram_reach = sum(np.random.randint(5, 20) for _ in range(instagram_posts))
     youtube_reach = sum(np.random.randint(20, 60) for _ in range(youtube_posts))
+    social_visitors = tiktok_reach + instagram_reach + youtube_reach
+    visitors += social_visitors
 
-social_visitors = tiktok_reach + instagram_reach + youtube_reach
-visitors += social_visitors
-    # Profit before taxes
+    # Orders and revenue
+    orders = np.random.binomial(visitors, conversion_rate)
+    revenue = orders * price
+    cost_goods = orders * cost
+
+    # Fees
+    payment_fees = orders * (price * 0.029 + 0.30)
+    amazon_fees = revenue * 0.15
+    domain_fee = 15 / 365  
+
+    # Refunds
+    refunds = np.random.binomial(orders, refund_rate)
+    refund_cost = refunds * price
+
+    # Net profit (before tax if you’re adding income tax later)
     pre_tax_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
 
-    # Idaho taxable income (apply deduction once, not daily)
-    taxable_income = max(0, pre_tax_profit - (standard_deduction / days))  # spread deduction over 30 days
-    idaho_income_tax = taxable_income * idaho_tax_rate
-
-    # Net profit after Idaho tax
-    net_profit = pre_tax_profit - idaho_income_tax
-
-    records.append([day+1, visitors, orders, revenue, cost_goods, payment_fees, amazon_fees, domain_fee, ad_spend, refund_cost, idaho_income_tax, net_profit])
+    records.append([
+        day+1, visitors, orders, revenue, cost_goods,
+        payment_fees, amazon_fees, ad_spend, refund_cost, domain_fee, pre_tax_profit
+    ])
 
 # DataFrame
 df = pd.DataFrame(records, columns=[
