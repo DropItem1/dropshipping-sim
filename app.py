@@ -42,8 +42,6 @@ for day in range(days):
         payment_fees, amazon_fees, domain_fee, ad_spend,
         refund_cost, net_profit
     ])
-
-# Totals
 # Totals
 totals = df[[
     "Revenue",
@@ -55,7 +53,6 @@ totals = df[[
     "Refund Cost",
     "Net Profit"
 ]].sum()
-
 totals["Day"] = "TOTAL"
 df_totals = pd.DataFrame(totals).T
 
