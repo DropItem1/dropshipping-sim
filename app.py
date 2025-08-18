@@ -84,7 +84,24 @@ records.append([
 
 # --- Deduction check banner ---
 annual_pre_tax_profit = df["Pre-Tax Profit"].sum()
-standard_deduction = 14600  # Single filer
+standard_deduction = 14600
+
+if annual_pre_tax_profit > standard_deduction:
+    taxable_income = annual_pre_tax_profit - standard_deduction
+    idaho_income_tax = taxable_income * 0.058
+    st.error(f"⚠️ Your yearly income (${annual_pre_tax_profit:,.0f}) is over the Idaho standard deduction (${standard_deduction:,}). Income tax will apply.")
+else:
+    taxable_income = 0
+    idaho_income_tax = 0
+    st.success(f"✅ Your yearly income (${annual_pre_tax_profit:,.0f}) is below the Idaho standard deduction (${standard_deduction:,}). No state tax applies.")
+
+# Net profit after yearly Idaho tax
+net_profit_after_tax = annual_pre_tax_profit - idaho_income_tax
+
+# Show totals
+st.metric("Annual Pre-Tax Profit", f"${annual_pre_tax_profit:,.0f}")
+st.metric("Idaho Income Tax", f"${idaho_income_tax:,.0f}")
+st.metric("Net Profit After Tax", f"${net_profit_after_tax:,.0f}")
 
 if annual_pre_tax_profit > standard_deduction:
     taxable_income = annual_pre_tax_profit - standard_deduction
