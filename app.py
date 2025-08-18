@@ -2,43 +2,41 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-st.title("📦 Dropshipping Business Simulator (1 Year)")
+st.title("📦 Dropshipping Business Simulator")
 
-st.write("Simulates 365 days of your dropshipping business. Adjust inputs and see how performance changes.")
+st.write("Adjust your business settings and see how your dropshipping store performs over 30 days.")
 
 # -----------------------------
 # User inputs
 # -----------------------------
-price = st.slider("Selling Price per Item ($)", 10, 100, 25)
-cost = st.slider("Supplier Cost per Item ($)", 2, 40, 8)
-ad_spend = st.slider("Daily Ad Spend ($)", 0, 100, 15)
-conversion_rate = st.slider("Conversion Rate (%)", 0.5, 10.0, 2.0) / 100
-refund_rate = st.slider("Refund Rate (%)", 0.0, 20.0, 3.0) / 100
+price = st.slider("Selling Price per Item ($)", 10, 50, 22)
+cost = st.slider("Supplier Cost per Item ($)", 2, 20, 6)
+ad_spend = st.slider("Daily Ad Spend ($)", 0, 50, 10)
+conversion_rate = st.slider("Conversion Rate (%)", 1.0, 10.0, 2.5) / 100
+refund_rate = st.slider("Refund Rate (%)", 0.0, 20.0, 5.0) / 100
 
 # Social media sliders
-tiktok_posts = st.slider("TikTok Posts per Day", 0, 10, 2, key="tiktok")
-instagram_posts = st.slider("Instagram Posts per Day", 0, 10, 1, key="insta")
-youtube_posts = st.slider("YouTube Posts per Day", 0, 5, 0, key="yt")
+tiktok_posts = st.slider("TikTok Posts per Day", 0, 5, 1, key="tiktok")
+instagram_posts = st.slider("Instagram Posts per Day", 0, 5, 1, key="insta")
+youtube_posts = st.slider("YouTube Posts per Day", 0, 5, 1, key="yt")
 
 # -----------------------------
 # Simulation setup
 # -----------------------------
 np.random.seed(42)
-days = 365  # simulate full year
-
-# base daily visitors (ads + randomness)
-daily_visitors = np.random.randint(30, 120, days)
+days = 30
+daily_visitors = np.random.randint(40, 100, days)
 
 records = []
 
 for day in range(days):
+    # Base visitors
     visitors = daily_visitors[day]
 
-    # Social media reach effect (random but scales with posts)
-    tiktok_reach = sum(np.random.randint(10, 80) for _ in range(tiktok_posts))
-    instagram_reach = sum(np.random.randint(5, 30) for _ in range(instagram_posts))
-    youtube_reach = sum(np.random.randint(15, 100) for _ in range(youtube_posts))
-
+    # Social media reach
+    tiktok_reach = sum(np.random.randint(15, 50) for _ in range(tiktok_posts))
+    instagram_reach = sum(np.random.randint(5, 20) for _ in range(instagram_posts))
+    youtube_reach = sum(np.random.randint(20, 60) for _ in range(youtube_posts))
     visitors += tiktok_reach + instagram_reach + youtube_reach
 
     # Orders & revenue
@@ -56,18 +54,12 @@ for day in range(days):
     refund_cost = refunds * price
 
     # Profit before tax
-pre_tax_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
-
-# Daily net profit (before Idaho state income tax, since we only calculate that yearly)
-net_profit = pre_tax_profit
-
-    # Profit before tax
-pre_tax_profit = (
+    pre_tax_profit = (
         revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
     )
 
-    # Save daily record
-records.append([
+    # Save daily record (11 values, matches 11 columns)
+    records.append([
         day + 1,
         visitors,
         orders,
@@ -81,51 +73,14 @@ records.append([
         pre_tax_profit
     ])
 
-
 # -----------------------------
 # DataFrame
 # -----------------------------
 df = pd.DataFrame(records, columns=[
-    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", 
-    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", 
-    "Pre-Tax Profit"
+    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees",
+    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", "Pre-Tax Profit"
 ])
 
-# --- Deduction check banner ---
-annual_pre_tax_profit = df["Pre-Tax Profit"].sum()
-standard_deduction = 14600
-
-if annual_pre_tax_profit > standard_deduction:
-    taxable_income = annual_pre_tax_profit - standard_deduction
-    idaho_income_tax = taxable_income * 0.058
-    net_profit = annual_pre_tax_profit - idaho_income_tax
-    st.error(f"⚠️ Your yearly income (${annual_pre_tax_profit:,.0f}) is over the Idaho standard deduction (${standard_deduction:,}). Income tax will apply.")
-else:
-    taxable_income = 0
-    idaho_income_tax = 0
-    net_profit = annual_pre_tax_profit
-    st.success(f"✅ Your yearly income (${annual_pre_tax_profit:,.0f}) is below the Idaho standard deduction (${standard_deduction:,}). No state tax applies.")
-
-# Net profit after yearly Idaho tax
-net_profit_after_tax = annual_pre_tax_profit - idaho_income_tax
-
-# Show totals
-st.metric("Annual Pre-Tax Profit", f"${annual_pre_tax_profit:,.0f}")
-st.metric("Idaho Income Tax", f"${idaho_income_tax:,.0f}")
-st.metric("Net Profit After Tax", f"${net_profit_after_tax:,.0f}")
-
-if annual_pre_tax_profit > standard_deduction:
-    taxable_income = annual_pre_tax_profit - standard_deduction
-    st.success(
-        f"✅ Your yearly profit (${annual_pre_tax_profit:,.2f}) is ABOVE the standard deduction "
-        f"(${standard_deduction:,}). You will owe Idaho income tax on ${taxable_income:,.2f}."
-    )
-else:
-    st.info(
-        f"ℹ️ Your yearly profit (${annual_pre_tax_profit:,.2f}) is BELOW the standard deduction "
-        f"(${standard_deduction:,}). No Idaho income tax is owed."
-    )
-    
 # -----------------------------
 # Totals and Idaho tax (annual)
 # -----------------------------
@@ -147,25 +102,12 @@ else:
 
 net_profit_after_tax = annual_pre_tax_profit - idaho_income_tax
 
-if annual_pre_tax_profit > standard_deduction:
-    taxable_income = annual_pre_tax_profit - standard_deduction
-    st.success(
-        f"✅ Your yearly profit (${annual_pre_tax_profit:,.2f}) is ABOVE the standard deduction "
-        f"(${standard_deduction:,}). You will owe Idaho income tax on ${taxable_income:,.2f}."
-    )
-else:
-    st.info(
-        f"ℹ️ Your yearly profit (${annual_pre_tax_profit:,.2f}) is BELOW the standard deduction "
-        f"(${standard_deduction:,}). No Idaho income tax is owed."
-    )
-
-
 # -----------------------------
 # Display
 # -----------------------------
 st.dataframe(df)
 
-st.write("### Totals (365 Days)")
+st.write("### Totals (30 Days)")
 st.write(totals)
 
 st.write(f"**Idaho Income Tax:** ${idaho_income_tax:,.2f}")
