@@ -61,6 +61,7 @@ totals["Day"] = "TOTAL"
 df_totals = pd.DataFrame(totals).T
 
 # Display
+st.dataframe(pd.concat([df, df_totals], ignore_index=True))
 st.line_chart(df.set_index("Day")["Net Profit"], use_container_width=True)
 
 # Chart
