@@ -89,7 +89,7 @@ records.append([
 df = pd.DataFrame(records, columns=[
     "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", 
     "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", 
-    "Pre-Tax Profit"
+    "Pre-Tax Profit", "Idaho Income Tax", "Net Profit"
 ])
 
 # --- Deduction check banner ---
