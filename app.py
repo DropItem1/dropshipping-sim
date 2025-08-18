@@ -44,7 +44,12 @@ for day in range(days):
     ])
 
 # Totals
-totals = df[["Revenue", "Cost of Goods", "Payment Fees", "Ad Spend", "Refund Cost", "Net Profit"]].sum()
+totals = df[[
+    "Revenue", "Cost of Goods", "Payment Fees",
+    "Amazon Fees", "Domain Fee", "Ad Spend",
+    "Refund Cost", "Net Profit"
+]].sum()
+
 totals["Day"] = "TOTAL"
 df_totals = pd.DataFrame(totals).T
 
