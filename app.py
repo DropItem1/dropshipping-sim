@@ -35,8 +35,12 @@ for day in range(days):
     tiktok_reach = sum(np.random.randint(15, 50) for _ in range(tiktok_posts))
     instagram_reach = sum(np.random.randint(5, 20) for _ in range(instagram_posts))
     youtube_reach = sum(np.random.randint(20, 60) for _ in range(youtube_posts))
-
     visitors += tiktok_reach + instagram_reach + youtube_reach
+
+   # Orders and revenue
+    orders = np.random.binomial(visitors, conversion_rate)
+    revenue = orders * price
+    cost_goods = orders * cost
     
     # Make DataFrame
 df = pd.DataFrame(records, columns=[
@@ -60,11 +64,6 @@ else:
     idaho_income_tax = 0
 
 net_profit_after_tax = annual_pre_tax_profit - idaho_income_tax
-    
-    # Orders and revenue
-    orders = np.random.binomial(visitors, conversion_rate)
-    revenue = orders * price
-    cost_goods = orders * cost
 
     # Fees
     payment_fees = orders * (price * 0.029 + 0.30)
