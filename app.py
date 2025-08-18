@@ -56,10 +56,21 @@ for day in range(days):
     # Net profit (before tax if you’re adding income tax later)
     pre_tax_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
 
-    records.append([
-        day+1, visitors, orders, revenue, cost_goods,
-        payment_fees, amazon_fees, ad_spend, refund_cost, domain_fee, pre_tax_profit
-    ])
+   records.append([
+    day+1, 
+    visitors, 
+    orders, 
+    revenue, 
+    cost_goods, 
+    payment_fees, 
+    amazon_fees, 
+    domain_fee, 
+    ad_spend, 
+    refund_cost, 
+    idaho_income_tax,   # 👈 this must be calculated before appending
+    net_profit          # 👈 after subtracting income tax
+])
+
 
 # DataFrame
 df = pd.DataFrame(records, columns=[
