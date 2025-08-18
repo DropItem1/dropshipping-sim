@@ -31,8 +31,8 @@ for day in range(days):
     domain_fee = 15 / 365                            # Daily domain cost (~$0.04)
 
     # Refunds
-    refunds = int(orders * refund_rate)
-    refund_cost = refunds * price
+   refunds = np.random.binomial(orders, refund_rate)
+refund_cost = refunds * price
 
     # Net profit
     net_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
