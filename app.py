@@ -66,3 +66,19 @@ st.line_chart(df.set_index("Day")["Net Profit"], use_container_width=True)
 
 # Chart
 st.line_chart(df.set_index("Day")["Net Profit"], use_container_width=True)
+
+# User input: social media posts per day
+tiktok_posts = st.slider("TikTok Posts per Day", 0, 5, 1)
+instagram_posts = st.slider("Instagram Posts per Day", 0, 5, 1)
+youtube_posts = st.slider("YouTube Posts per Day", 0, 3, 0)
+
+# Each platform’s reach factor (random range per post)
+tiktok_reach = [np.random.randint(15, 50) for _ in range(tiktok_posts)]
+instagram_reach = [np.random.randint(5, 20) for _ in range(instagram_posts)]
+youtube_reach = [np.random.randint(20, 60) for _ in range(youtube_posts)]
+
+# Total social media visitors
+social_visitors = sum(tiktok_reach) + sum(instagram_reach) + sum(youtube_reach)
+
+# Daily visitors
+visitors = daily_visitors[day] + social_visitors
