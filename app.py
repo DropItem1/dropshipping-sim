@@ -73,6 +73,8 @@ for day in range(days):
         ad_spend,
         refund_cost,
         pre_tax_profit
+        idaho_income_tax,
+        net_profit
     ])
 
 # --- Deduction check banner ---
@@ -94,8 +96,9 @@ else:
 # DataFrame
 # -----------------------------
 df = pd.DataFrame(records, columns=[
-    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees",
-    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", "Pre-Tax Profit"
+    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", 
+    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", 
+    "Pre-Tax Profit", "Idaho Income Tax", "Net Profit"
 ])
 
 # -----------------------------
