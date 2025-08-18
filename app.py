@@ -72,7 +72,7 @@ for day in range(days):
         domain_fee,
         ad_spend,
         refund_cost,
-        pre_tax_profit
+        pre_tax_profit,
         idaho_income_tax,
         net_profit
     ])
