@@ -13,10 +13,10 @@ ad_spend = st.slider("Daily Ad Spend ($)", 0, 50, 10)
 conversion_rate = st.slider("Conversion Rate (%)", 1.0, 10.0, 2.5) / 100
 refund_rate = st.slider("Refund Rate (%)", 0.0, 20.0, 5.0) / 100
 
-# User inputs for social media
-tiktok_posts = st.slider("TikTok Posts per Day", 0, 5, 1)
-instagram_posts = st.slider("Instagram Posts per Day", 0, 5, 1)
-youtube_posts = st.slider("YouTube Posts per Day", 0, 5, 1)
+# Sliders (put these ONCE, before the loop)
+tiktok_posts = st.slider("TikTok Posts per Day", 0, 5, 1, key="tiktok")
+instagram_posts = st.slider("Instagram Posts per Day", 0, 5, 1, key="insta")
+youtube_posts = st.slider("YouTube Posts per Day", 0, 5, 1, key="yt")
 
 # Simulation
 np.random.seed(42)
@@ -30,16 +30,13 @@ idaho_tax_rate = 0.05695    # 5.695%
 
 records = []
 for day in range(days):
-    # Base visitors
     visitors = daily_visitors[day]
 
-    # Social media boost
     tiktok_reach = sum(np.random.randint(15, 50) for _ in range(tiktok_posts))
     instagram_reach = sum(np.random.randint(5, 20) for _ in range(instagram_posts))
     youtube_reach = sum(np.random.randint(20, 60) for _ in range(youtube_posts))
-    social_visitors = tiktok_reach + instagram_reach + youtube_reach
-    visitors += social_visitors
 
+    visitors += tiktok_reach + instagram_reach + youtube_reach
     # Orders and revenue
     orders = np.random.binomial(visitors, conversion_rate)
     revenue = orders * price
