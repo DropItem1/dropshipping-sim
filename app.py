@@ -18,6 +18,11 @@ np.random.seed(42)
 days = 30
 daily_visitors = np.random.randint(40, 100, days)
 
+# Social media posts per day
+tiktok_posts = st.slider("TikTok Posts per Day", 0, 5, 1)
+instagram_posts = st.slider("Instagram Posts per Day", 0, 5, 1)
+youtube_posts = st.slider("YouTube Posts per Day", 0, 3, 0)
+
 # Idaho state income tax settings
 standard_deduction = 15000  # single filer; change if needed
 idaho_tax_rate = 0.05695    # 5.695%
@@ -33,7 +38,16 @@ for day in range(days):
     domain_fee = 15 / 365
     refunds = np.random.binomial(orders, refund_rate)
     refund_cost = refunds * price
+    # Base visitors from random daily traffic
+    visitors = daily_visitors[day]
 
+    # Add social media boost
+    tiktok_reach = sum(np.random.randint(15, 50) for _ in range(tiktok_posts))
+    instagram_reach = sum(np.random.randint(5, 20) for _ in range(instagram_posts))
+    youtube_reach = sum(np.random.randint(20, 60) for _ in range(youtube_posts))
+
+social_visitors = tiktok_reach + instagram_reach + youtube_reach
+visitors += social_visitors
     # Profit before taxes
     pre_tax_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
 
