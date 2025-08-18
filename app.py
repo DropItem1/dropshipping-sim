@@ -13,6 +13,11 @@ ad_spend = st.slider("Daily Ad Spend ($)", 0, 50, 10)
 conversion_rate = st.slider("Conversion Rate (%)", 1.0, 10.0, 2.5) / 100
 refund_rate = st.slider("Refund Rate (%)", 0.0, 20.0, 5.0) / 100
 
+# User inputs for social media
+tiktok_posts = st.slider("TikTok Posts per Day", 0, 5, 1)
+instagram_posts = st.slider("Instagram Posts per Day", 0, 5, 1)
+youtube_posts = st.slider("YouTube Posts per Day", 0, 5, 1)
+
 # Simulation
 np.random.seed(42)
 days = 30
