@@ -44,10 +44,16 @@ for day in range(days):
     ])
 
 # Totals
+# Totals
 totals = df[[
-    "Revenue", "Cost of Goods", "Payment Fees",
-    "Amazon Fees", "Domain Fee", "Ad Spend",
-    "Refund Cost", "Net Profit"
+    "Revenue",
+    "Cost of Goods",
+    "Payment Fees",
+    "Amazon Fees",
+    "Domain Fee",
+    "Ad Spend",
+    "Refund Cost",
+    "Net Profit"
 ]].sum()
 
 totals["Day"] = "TOTAL"
