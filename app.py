@@ -32,7 +32,7 @@ for day in range(days):
 
     # Refunds
    refunds = np.random.binomial(orders, refund_rate)
-refund_cost = refunds * price
+    refund_cost = refunds * price
 
     # Net profit
     net_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
