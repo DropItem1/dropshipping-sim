@@ -84,7 +84,7 @@ records.append([
 
 # --- Deduction check banner ---
 annual_pre_tax_profit = df["Pre-Tax Profit"].sum()
-standard_deduction = 14600  # Single filer
+    standard_deduction = 14600  # Single filer
 
 if annual_pre_tax_profit > standard_deduction:
     taxable_income = annual_pre_tax_profit - standard_deduction
