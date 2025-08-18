@@ -56,6 +56,12 @@ for day in range(days):
     refund_cost = refunds * price
 
     # Profit before tax
+pre_tax_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
+
+# Daily net profit (before Idaho state income tax, since we only calculate that yearly)
+net_profit = pre_tax_profit
+
+    # Profit before tax
     pre_tax_profit = (
         revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
     )
