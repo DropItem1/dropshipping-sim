@@ -82,6 +82,16 @@ records.append([
         net_profit
     ])
 
+
+# -----------------------------
+# DataFrame
+# -----------------------------
+df = pd.DataFrame(records, columns=[
+    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", 
+    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", 
+    "Pre-Tax Profit", "Idaho Income Tax", "Net Profit"
+])
+
 # --- Deduction check banner ---
 annual_pre_tax_profit = df["Pre-Tax Profit"].sum()
 standard_deduction = 14600
@@ -114,15 +124,7 @@ else:
         f"ℹ️ Your yearly profit (${annual_pre_tax_profit:,.2f}) is BELOW the standard deduction "
         f"(${standard_deduction:,}). No Idaho income tax is owed."
     )
-# -----------------------------
-# DataFrame
-# -----------------------------
-df = pd.DataFrame(records, columns=[
-    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", 
-    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", 
-    "Pre-Tax Profit", "Idaho Income Tax", "Net Profit"
-])
-
+    
 # -----------------------------
 # Totals and Idaho tax (annual)
 # -----------------------------
