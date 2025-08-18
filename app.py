@@ -73,7 +73,6 @@ for day in range(days):
         ad_spend,
         refund_cost,
         pre_tax_profit,
-        idaho_income_tax,
         net_profit
     ])
 
