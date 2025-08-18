@@ -76,25 +76,26 @@ for day in range(days):
         net_profit
     ])
 
-    # Make DataFrame
+# DataFrame
 df = pd.DataFrame(records, columns=[
-    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees",
+    "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", 
     "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", "Pre-Tax Profit"
 ])
 
-# Totals across year
-totals = df[["Revenue", "Cost of Goods", "Payment Fees",
-             "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", "Pre-Tax Profit"]].sum()
+# Totals across all days
+totals = df[[
+    "Revenue", "Cost of Goods", "Payment Fees", "Amazon Fees", "Domain Fee", 
+    "Ad Spend", "Refund Cost", "Pre-Tax Profit"
+]].sum()
 
-# Calculate Idaho income tax only once
+# Annual Idaho income tax
 annual_pre_tax_profit = totals["Pre-Tax Profit"]
 standard_deduction = 14600  
 
 if annual_pre_tax_profit > standard_deduction:
     taxable_income = annual_pre_tax_profit - standard_deduction
-    idaho_income_tax = taxable_income * 0.058
+    idaho_income_tax = taxable_income * 0.05695
 else:
-    taxable_income = 0
     idaho_income_tax = 0
 
 net_profit_after_tax = annual_pre_tax_profit - idaho_income_tax
