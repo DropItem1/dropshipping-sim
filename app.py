@@ -67,7 +67,7 @@ net_profit_after_tax = annual_pre_tax_profit - idaho_income_tax
 
 # Fees
 payment_fees = orders * (price * 0.029 + 0.30)
-    amazon_fees = revenue * 0.15
+amazon_fees = revenue * 0.15
     domain_fee = 15 / 365  
 
     # Refunds
