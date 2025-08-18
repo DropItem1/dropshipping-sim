@@ -89,7 +89,7 @@ records.append([
 df = pd.DataFrame(records, columns=[
     "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", 
     "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", 
-    "Pre-Tax Profit", "Idaho Income Tax", "Net Profit"
+    "Pre-Tax Profit"
 ])
 
 # --- Deduction check banner ---
@@ -99,10 +99,12 @@ standard_deduction = 14600
 if annual_pre_tax_profit > standard_deduction:
     taxable_income = annual_pre_tax_profit - standard_deduction
     idaho_income_tax = taxable_income * 0.058
+    net_profit = annual_pre_tax_profit - idaho_income_tax
     st.error(f"⚠️ Your yearly income (${annual_pre_tax_profit:,.0f}) is over the Idaho standard deduction (${standard_deduction:,}). Income tax will apply.")
 else:
     taxable_income = 0
     idaho_income_tax = 0
+    net_profit = annual_pre_tax_profit
     st.success(f"✅ Your yearly income (${annual_pre_tax_profit:,.0f}) is below the Idaho standard deduction (${standard_deduction:,}). No state tax applies.")
 
 # Net profit after yearly Idaho tax
