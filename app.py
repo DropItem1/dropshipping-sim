@@ -53,23 +53,30 @@ for day in range(days):
     refunds = np.random.binomial(orders, refund_rate)
     refund_cost = refunds * price
 
-    # Net profit (before tax if you’re adding income tax later)
+    # Profit before tax
     pre_tax_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
 
-   records.append([
-    day+1, 
-    visitors, 
-    orders, 
-    revenue, 
-    cost_goods, 
-    payment_fees, 
-    amazon_fees, 
-    domain_fee, 
-    ad_spend, 
-    refund_cost, 
-    idaho_income_tax,   # 👈 this must be calculated before appending
-    net_profit          # 👈 after subtracting income tax
-])
+    # Idaho income tax (flat 5.695%)
+    idaho_income_tax = pre_tax_profit * 0.05695 if pre_tax_profit > 0 else 0
+
+    # Net profit after tax
+    net_profit = pre_tax_profit - idaho_income_tax
+
+    # Save daily record
+    records.append([
+        day+1,
+        visitors,
+        orders,
+        revenue,
+        cost_goods,
+        payment_fees,
+        amazon_fees,
+        domain_fee,
+        ad_spend,
+        refund_cost,
+        idaho_income_tax,
+        net_profit
+    ])
 
 
 # DataFrame
