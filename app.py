@@ -40,7 +40,7 @@ for day in range(days):
     records.append([
         day+1, visitors, orders, revenue, cost_goods,
         payment_fees, amazon_fees, domain_fee, ad_spend,
-        refund_cost, net_profit)]
+        refund_cost, net_profit])
   # DataFrame
 df = pd.DataFrame(records, columns=[
     "Day", "Visitors", "Orders", "Revenue",
