@@ -75,6 +75,21 @@ for day in range(days):
         pre_tax_profit
     ])
 
+# --- Deduction check banner ---
+annual_pre_tax_profit = df["Pre-Tax Profit"].sum()
+standard_deduction = 14600  # Single filer
+
+if annual_pre_tax_profit > standard_deduction:
+    taxable_income = annual_pre_tax_profit - standard_deduction
+    st.success(
+        f"✅ Your yearly profit (${annual_pre_tax_profit:,.2f}) is ABOVE the standard deduction "
+        f"(${standard_deduction:,}). You will owe Idaho income tax on ${taxable_income:,.2f}."
+    )
+else:
+    st.info(
+        f"ℹ️ Your yearly profit (${annual_pre_tax_profit:,.2f}) is BELOW the standard deduction "
+        f"(${standard_deduction:,}). No Idaho income tax is owed."
+    )
 # -----------------------------
 # DataFrame
 # -----------------------------
@@ -103,6 +118,19 @@ else:
     idaho_income_tax = 0
 
 net_profit_after_tax = annual_pre_tax_profit - idaho_income_tax
+
+if annual_pre_tax_profit > standard_deduction:
+    taxable_income = annual_pre_tax_profit - standard_deduction
+    st.success(
+        f"✅ Your yearly profit (${annual_pre_tax_profit:,.2f}) is ABOVE the standard deduction "
+        f"(${standard_deduction:,}). You will owe Idaho income tax on ${taxable_income:,.2f}."
+    )
+else:
+    st.info(
+        f"ℹ️ Your yearly profit (${annual_pre_tax_profit:,.2f}) is BELOW the standard deduction "
+        f"(${standard_deduction:,}). No Idaho income tax is owed."
+    )
+
 
 # -----------------------------
 # Display
