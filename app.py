@@ -78,8 +78,7 @@ records.append([
         domain_fee,
         ad_spend,
         refund_cost,
-        pre_tax_profit,
-        net_profit
+        pre_tax_profit
     ])
 
 
