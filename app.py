@@ -18,10 +18,6 @@ np.random.seed(42)
 days = 30
 daily_visitors = np.random.randint(40, 100, days)
 
-# Social media posts per day
-tiktok_posts = st.slider("TikTok Posts per Day", 0, 5, 1)
-instagram_posts = st.slider("Instagram Posts per Day", 0, 5, 1)
-youtube_posts = st.slider("YouTube Posts per Day", 0, 3, 0)
 
 # Idaho state income tax settings
 standard_deduction = 15000  # single filer; change if needed
