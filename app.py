@@ -21,7 +21,7 @@ daily_visitors = np.random.randint(40, 100, days)
 records = []
 for day in range(days):
     visitors = daily_visitors[day]
-    orders = int(visitors * conversion_rate)
+    orders = np.random.binomial(visitors, conversion_rate)
     revenue = orders * price
     cost_goods = orders * cost
     payment_fees = orders * (price * 0.029 + 0.30)
