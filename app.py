@@ -62,7 +62,7 @@ pre_tax_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - 
 net_profit = pre_tax_profit
 
     # Profit before tax
-    pre_tax_profit = (
+pre_tax_profit = (
         revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
     )
 
