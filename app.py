@@ -10,8 +10,8 @@ st.write("Adjust your business settings and see how your dropshipping store perf
 price = st.slider("Selling Price per Item ($)", 10, 50, 22)
 cost = st.slider("Supplier Cost per Item ($)", 2, 20, 6)
 ad_spend = st.slider("Daily Ad Spend ($)", 0, 50, 10)
-conversion_rate = st.slider("Conversion Rate (%)", 1, 10, 2.5) / 100
-refund_rate = st.slider("Refund Rate (%)", 0, 20, 5) / 100
+conversion_rate = st.slider("Conversion Rate (%)", 1.0, 10.0, 2.5) / 100
+refund_rate = st.slider("Refund Rate (%)", 0.0, 20.0, 5.0) / 100
 
 # Simulation
 np.random.seed(42)
