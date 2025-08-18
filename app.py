@@ -24,15 +24,23 @@ for day in range(days):
     orders = np.random.binomial(visitors, conversion_rate)
     revenue = orders * price
     cost_goods = orders * cost
-    payment_fees = orders * (price * 0.029 + 0.30)
+    payment_fees = orders * (price * 0.029 + 0.30)   # PayPal/Stripe fees
+    amazon_fees = revenue * 0.15                     # Amazon platform fee (15%)
+    domain_fee = 15 / 365                            # Daily domain cost (~$0.04)
+
     refunds = int(orders * refund_rate)
     refund_cost = refunds * price
-    net_profit = revenue - cost_goods - payment_fees - ad_spend - refund_cost
+
+net_profit = revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
+
     records.append([day+1, visitors, orders, revenue, cost_goods, payment_fees, ad_spend, refund_cost, net_profit])
 
 # DataFrame
-df = pd.DataFrame(records, columns=["Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees", "Ad Spend", "Refund Cost", "Net Profit"])
-
+df = pd.DataFrame(records, columns=[
+    "Day", "Visitors", "Orders", "Revenue",
+    "Cost of Goods", "Payment Fees", "Amazon Fees",
+    "Domain Fee", "Ad Spend", "Refund Cost", "Net Profit"
+])
 # Totals
 totals = df[["Revenue", "Cost of Goods", "Payment Fees", "Ad Spend", "Refund Cost", "Net Profit"]].sum()
 totals["Day"] = "TOTAL"
