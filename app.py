@@ -61,6 +61,11 @@ for day in range(days):
     refunds = np.random.binomial(orders, refund_rate)
     refund_cost = refunds * price
 
+    # Damaged or missing packages (random daily chance 1–5%)
+    failure_chance = np.random.uniform(0.01, 0.05)
+    failures = np.random.binomial(orders, failure_chance)
+    failure_cost = failures * price
+    
     # Profit before tax
     pre_tax_profit = (
     revenue - cost_goods - payment_fees - amazon_fees - individual_fee
@@ -105,7 +110,7 @@ idaho_tax_rate = 0.05695    # 5.695%
 
 if annual_pre_tax_profit > standard_deduction:
     taxable_income = annual_pre_tax_profit - standard_deduction
-    idaho_income_tax = taxable_income * idaho_tax_rate
+    idaho_income_tax = taxable_income * idaho_tax_rate - failure_cost
 else:
     taxable_income = 0
     idaho_income_tax = 0
