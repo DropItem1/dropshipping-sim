@@ -54,6 +54,7 @@ for day in range(days):
     # Fees
     payment_fees = orders * (price * 0.029 + 0.30)
     amazon_fees = revenue * 0.15
+    individual_fee = orders * 1.00
     domain_fee = 15 / 365  # daily domain fee
 
     # Refunds
@@ -61,9 +62,10 @@ for day in range(days):
     refund_cost = refunds * price
 
     # Profit before tax
-    pre_tax_profit = (
-        revenue - cost_goods - payment_fees - amazon_fees - ad_spend - refund_cost - domain_fee
-    )
+   pre_tax_profit = (
+    revenue - cost_goods - payment_fees - amazon_fees - individual_fee
+    - ad_spend - refund_cost - domain_fee
+)
 
     # Save daily record
     records.append([
@@ -77,7 +79,8 @@ for day in range(days):
         domain_fee,
         ad_spend,
         refund_cost,
-        pre_tax_profit
+        pre_tax_profit,
+        individual_fee
     ])
 
 # -----------------------------
@@ -85,7 +88,7 @@ for day in range(days):
 # -----------------------------
 df = pd.DataFrame(records, columns=[
     "Day", "Visitors", "Orders", "Revenue", "Cost of Goods", "Payment Fees",
-    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", "Pre-Tax Profit"
+    "Amazon Fees", "Domain Fee", "Ad Spend", "Refund Cost", "Pre-Tax Profit", "Individual Fee"
 ])
 
 # -----------------------------
