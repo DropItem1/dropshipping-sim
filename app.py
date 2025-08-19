@@ -43,7 +43,7 @@ for day in range(days):
 
      # Orders & revenue
     # Add chance of no-sale day (e.g., 15% chance)
-    if np.random.rand() < 0.15:
+    if np.random.rand() < 0.40:
         orders = 0
     else:
         orders = np.random.binomial(visitors, conversion_rate)
