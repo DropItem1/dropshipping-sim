@@ -62,7 +62,7 @@ for day in range(days):
     refund_cost = refunds * price
 
     # Profit before tax
-   pre_tax_profit = (
+pre_tax_profit = (
     revenue - cost_goods - payment_fees - amazon_fees - individual_fee
     - ad_spend - refund_cost - domain_fee
 )
