@@ -41,8 +41,13 @@ for day in range(days):
 
     visitors += tiktok_reach + instagram_reach + youtube_reach
 
-    # Orders & revenue
-    orders = np.random.binomial(visitors, conversion_rate)
+     # Orders & revenue
+    # Add chance of no-sale day (e.g., 15% chance)
+    if np.random.rand() < 0.15:
+        orders = 0
+    else:
+        orders = np.random.binomial(visitors, conversion_rate)
+
     revenue = orders * price
     cost_goods = orders * cost
 
