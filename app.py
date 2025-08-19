@@ -68,7 +68,7 @@ pre_tax_profit = (
 )
 
     # Save daily record
-    records.append([
+records.append([
         day + 1,
         visitors,
         orders,
